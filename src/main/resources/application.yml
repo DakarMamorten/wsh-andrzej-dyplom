@@ -1,0 +1,12 @@
+spring:
+  security:
+    user:
+      password: password
+  datasource:
+    driverClassName: org.postgresql.Driver
+    url: jdbc:postgresql://localhost:5432/register-ts
+    username: postgres
+    password: postgres
+  jpa:
+    hibernate:
+      ddl-auto: create
