@@ -13,7 +13,10 @@ public class UserController {
   @GetMapping
   public String home() {
     final Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-    System.out.println(authentication.getAuthorities());
-    return "/index";
+    boolean hasRoleAdministrator= authentication.getAuthorities().
+            stream().
+            anyMatch(grantedAuthority -> grantedAuthority.getAuthority().equals("ADMINISTRATOR"));
+
+    return hasRoleAdministrator ? "/admin/index" : "/user/index";
   }
 }
