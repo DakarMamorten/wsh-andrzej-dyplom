@@ -1,7 +1,4 @@
 spring:
-  security:
-    user:
-      password: password
   datasource:
     driverClassName: org.postgresql.Driver
     url: jdbc:postgresql://localhost:5432/register-ts
@@ -9,4 +6,4 @@ spring:
     password: postgres
   jpa:
     hibernate:
-      ddl-auto: create
+      ddl-auto: validate
