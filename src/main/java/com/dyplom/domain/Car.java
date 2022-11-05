@@ -19,15 +19,15 @@ public class Car {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long carId;
-    private int regNo;
+    private String regNo;
     private String fullName;
     private String brand;
     private String model;
     private int yearOfProduction;
-    private long vinNumber;
+    private String vinNumber;
     private String oldRegistryNumber;
 
-    public Car(int regNo, String fullName, String brand, String model, int yearOfProduction, long vinNumber, String oldRegistryNumber) {
+    public Car(String regNo, String fullName, String brand, String model, int yearOfProduction, String vinNumber, String oldRegistryNumber) {
         this.regNo = regNo;
         this.fullName = fullName;
         this.brand = brand;

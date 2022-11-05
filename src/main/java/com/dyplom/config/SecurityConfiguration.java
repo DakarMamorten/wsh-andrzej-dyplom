@@ -13,35 +13,37 @@ import org.springframework.security.web.SecurityFilterChain;
 @EnableWebSecurity
 public class SecurityConfiguration {
 
-  private final MyUserDetailsService userDetailsService;
+    private final MyUserDetailsService userDetailsService;
 
-  public SecurityConfiguration(MyUserDetailsService userDetailsService) {
-    this.userDetailsService = userDetailsService;
-  }
+    public SecurityConfiguration(MyUserDetailsService userDetailsService) {
+        this.userDetailsService = userDetailsService;
+    }
 
-  @Bean
-  public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-    http
-        .authorizeHttpRequests((requests) -> requests
-                .antMatchers("/login").permitAll()
-                .antMatchers("/login/error").permitAll()
-                .antMatchers("/user/**").hasAuthority("USER")
-                .antMatchers("/admin/**").hasRole("ADMINISTRATOR")
-                .anyRequest().authenticated()
-        )
-        .userDetailsService(userDetailsService)
-        .formLogin((form) -> form
-            .loginPage("/login")
-            .permitAll()
-        )
-        .logout(LogoutConfigurer::permitAll);
+    @Bean
+    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+        http
+                .authorizeHttpRequests((requests) -> requests
+                        .antMatchers("/login").permitAll()
+                        .antMatchers("/login/error").permitAll()
+                        .antMatchers("/user/**").hasAuthority("USER")
+                        .antMatchers("/admin/**").hasRole("ADMINISTRATOR")
+                        .anyRequest().authenticated()
+                )
+                .userDetailsService(userDetailsService)
+                .formLogin((form) -> form
+                        .loginPage("/login")
+                        .permitAll()
+                        .defaultSuccessUrl("/home")
+                )
+                .logout(LogoutConfigurer::permitAll);
 
-    return http.build();
-  }
 
-  @Bean
-  public BCryptPasswordEncoder encoder() {
-    return new BCryptPasswordEncoder();
-  }
+        return http.build();
+    }
+
+    @Bean
+    public BCryptPasswordEncoder encoder() {
+        return new BCryptPasswordEncoder();
+    }
 
 }
