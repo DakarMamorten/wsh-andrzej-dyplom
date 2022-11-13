@@ -1,8 +1,10 @@
 package com.dyplom.service;
 
+import com.dyplom.domain.Role;
 import com.dyplom.domain.User;
 import com.dyplom.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -12,7 +14,13 @@ import java.util.List;
 public class UserService {
     private final UserRepository userRepository;
 
-    public List<User> shawAll(){
+    public List<User> shawAll() {
         return userRepository.findAll();
+
+    }
+
+    public void add(final Role role, final String username, final String password) {
+        var user = new User(role, username, new BCryptPasswordEncoder().encode(password));
+        userRepository.save(user);
     }
 }

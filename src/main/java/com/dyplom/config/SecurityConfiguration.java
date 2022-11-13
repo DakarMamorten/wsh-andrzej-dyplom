@@ -25,7 +25,8 @@ public class SecurityConfiguration {
                 .authorizeHttpRequests((requests) -> requests
                         .antMatchers("/login").permitAll()
                         .antMatchers("/login/error").permitAll()
-                        .antMatchers("/user/**").hasAuthority("USER")
+                        .antMatchers("/user/**").hasAnyAuthority("USER","ADMINISTRATOR")
+                        .antMatchers("/users/**").hasAnyAuthority("USER","ADMINISTRATOR")
                         .antMatchers("/admin/**").hasRole("ADMINISTRATOR")
                         .anyRequest().authenticated()
                 )
