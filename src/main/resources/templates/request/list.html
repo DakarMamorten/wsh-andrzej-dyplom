@@ -14,7 +14,7 @@
 
     <h1>Cars List</h1>
     <table class="table table-striped align-middle">
-        <tr th:each="car : ${cars}">
+        <tr th:each="request : ${requests}">
             <td class="text-center" th:text="${car.carId}"></td>
             <td class="text-center" th:text="${car.regNo}"></td>
             <td class="text-center" th:text="${car.fullName}"></td>

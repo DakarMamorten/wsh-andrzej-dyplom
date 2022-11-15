@@ -29,7 +29,4 @@ public class MyUserDetailsService implements UserDetailsService {
         .orElseThrow(EntityNotFoundException::new);
   }
 
-  public List<com.dyplom.domain.User> shawAll(){
-   return userRepository.findAll();
-  }
 }

@@ -1,6 +1,6 @@
 package com.dyplom.domain;
 
 public enum Role {
-    ADMINISTRATOR,
-    USER;
+    ROLE_ADMINISTRATOR,
+    ROLE_USER;
 }

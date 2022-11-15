@@ -2,7 +2,7 @@ CREATE TABLE car
 (
     car_id              BIGSERIAL,
     reg_no              VARCHAR,
-    full_name           VARCHAR,
+    country_reg    VARCHAR,
     brand               VARCHAR,
     model               VARCHAR,
     year_of_production  INTEGER,

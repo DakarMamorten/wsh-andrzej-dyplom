@@ -10,20 +10,20 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
-@RequestMapping("/users")
+@RequestMapping("/admin/users")
 @RequiredArgsConstructor
 public class UserController {
   private final UserService userService;
 
   @GetMapping("/list")
   public String list(Model model) {
-    model.addAttribute("users",userService.shawAll());
+    model.addAttribute("users",userService.findAll());
     return "user/list";
   }
 
   @PostMapping("/add")
   public String add(final Role role, final String username, final String password){
     userService.add(role,username,password);
-    return "redirect:/users/list";
+    return "redirect:/admin/users/list";
   }
 }

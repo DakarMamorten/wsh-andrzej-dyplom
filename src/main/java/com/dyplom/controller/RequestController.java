@@ -1,6 +1,6 @@
 package com.dyplom.controller;
 
-import com.dyplom.service.CarService;
+import com.dyplom.service.RequestService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -8,14 +8,14 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
-@RequestMapping("/car")
+@RequestMapping("/request")
 @RequiredArgsConstructor
-public class CarController {
-    private final CarService carService;
+public class RequestController {
+    private final RequestService requestService;
 
     @GetMapping("/list")
     public String list(Model model) {
-        model.addAttribute("cars",carService.findAll());
-        return "car/list";
+        model.addAttribute("requests", requestService.findAll());
+        return "request/list";
     }
 }

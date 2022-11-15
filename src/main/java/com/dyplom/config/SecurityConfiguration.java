@@ -5,9 +5,11 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.config.annotation.web.configurers.LogoutConfigurer;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
+
+import static com.dyplom.domain.Role.ROLE_ADMINISTRATOR;
 
 @Configuration
 @EnableWebSecurity
@@ -24,10 +26,9 @@ public class SecurityConfiguration {
         http
                 .authorizeHttpRequests((requests) -> requests
                         .antMatchers("/login").permitAll()
+                        .antMatchers("/logout").permitAll()
                         .antMatchers("/login/error").permitAll()
-                        .antMatchers("/user/**").hasAnyAuthority("USER","ADMINISTRATOR")
-                        .antMatchers("/users/**").hasAnyAuthority("USER","ADMINISTRATOR")
-                        .antMatchers("/admin/**").hasRole("ADMINISTRATOR")
+                        .antMatchers("/admin/**").hasAuthority(ROLE_ADMINISTRATOR.name())
                         .anyRequest().authenticated()
                 )
                 .userDetailsService(userDetailsService)
@@ -36,7 +37,11 @@ public class SecurityConfiguration {
                         .permitAll()
                         .defaultSuccessUrl("/home")
                 )
-                .logout(LogoutConfigurer::permitAll);
+                .logout()
+                .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
+                .logoutSuccessUrl("/login")
+                .deleteCookies("JSESSIONID")
+                .invalidateHttpSession(true);
 
 
         return http.build();
