@@ -6,6 +6,8 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Getter
@@ -18,7 +20,10 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "user_id")
     private Long id;
-    
+
+    @OneToMany(cascade = CascadeType.ALL,
+    mappedBy = "user", orphanRemoval = true)
+    private List<Request> requests = new ArrayList<>();
     @Enumerated(EnumType.STRING)
     private Role role;
     private String username;
@@ -34,4 +39,5 @@ public class User {
         this.role = role;
         this.username = username;
     }
+
 }

@@ -12,18 +12,32 @@
 
 <div class="container">
 
-    <h1>Cars List</h1>
+    <h1>Request List</h1>
     <table class="table table-striped align-middle">
+        <tr>
+            <th class="text-center">Request id</th>
+            <th class="text-center">Car brand</th>
+            <th class="text-center">Car model</th>
+            <th class="text-center">Car number</th>
+            <th class="text-center">User name</th>
+            <th class="text-center">Status</th>
+            <th class="text-center">Date</th>
+            <th class="text-center" colspan="2">Action</th>
+        </tr>
         <tr th:each="request : ${requests}">
-            <td class="text-center" th:text="${car.carId}"></td>
-            <td class="text-center" th:text="${car.regNo}"></td>
-            <td class="text-center" th:text="${car.fullName}"></td>
-            <td class="text-center" th:text="${car.brand}"></td>
-            <td class="text-center" th:text="${car.model}"></td>
-            <td class="text-center" th:text="${car.yearOfProduction}"></td>
-            <td class="text-center" th:text="${car.vinNumber}"></td>
-            <td class="text-center" th:text="${car.oldRegistryNumber}"></td>
-
+            <td class="text-center" th:text="${request.id}"></td>
+            <td class="text-center" th:text="${request.car.getBrand()}"></td>
+            <td class="text-center" th:text="${request.car.getModel().name()}"></td>
+            <td class="text-center" th:text="${request.car.getRegNo()}"></td>
+            <td class="text-center" th:text="${request.user.getUsername()}"></td>
+            <td class="text-center">
+                <span th:class="badge" th:classappend="${request.status.name().equals('NEW')} ? 'bg-warning text-dark' : (${request.status.name().equals('APPROVED')} ?  'bg-success' : 'bg-danger')">
+                    <span th:text="${request.status.name()}"/>
+                </span>
+            </td>
+            <td class="text-center" th:text="${#temporals.format(request.dateCreate, 'dd-MM-yyyy HH:mm')}"></td>
+            <td th:if="${request.status.name().equals('NEW')}"><button type="button" class="btn btn-success">Approve</button></td>
+            <td  th:if="${request.status.name().equals('NEW')}"><button type="button" class="btn btn-danger">Reject</button></td>
         </tr>
     </table>
 </div>
