@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html">
+<html xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html" xmlns:sec="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
     <title>Cars</title>
@@ -9,10 +9,35 @@
 </head>
 <body>
 <div th:include="/navbar::content"></div>
-
 <div class="container">
+    <h3>My Requests</h3>
+    <table class="table table-striped align-middle">
+        <tr>
+            <th class="text-center">Request id</th>
+            <th class="text-center">Car brand</th>
+            <th class="text-center">Car model</th>
+            <th class="text-center">Car number</th>
+            <th class="text-center">Status</th>
+            <th class="text-center">Date</th>
+        </tr>
+        <tr th:each="request : ${user_requests}">
+            <td class="text-center" th:text="${request.id}"></td>
+            <td class="text-center" th:text="${request.car.getBrand()}"></td>
+            <td class="text-center" th:text="${request.car.getModel().name()}"></td>
+            <td class="text-center" th:text="${request.car.getRegNo()}"></td>
+            <td class="text-center">
+                <span th:class="badge"
+                      th:classappend="${request.status.name().equals('NEW')} ? 'bg-warning text-dark' : (${request.status.name().equals('APPROVED')} ?  'bg-success' : 'bg-danger')">
+                    <span th:text="${request.status.name()}"/>
+                </span>
+            </td>
+            <td class="text-center" th:text="${#temporals.format(request.dateCreate, 'dd-MM-yyyy HH:mm')}"></td>
+        </tr>
+    </table>
+</div>
 
-    <h1>Request List</h1>
+<div class="container" sec:authorize="hasRole('ROLE_ADMINISTRATOR')">
+    <h2>Request List</h2>
     <table class="table table-striped align-middle">
         <tr>
             <th class="text-center">Request id</th>
@@ -31,13 +56,25 @@
             <td class="text-center" th:text="${request.car.getRegNo()}"></td>
             <td class="text-center" th:text="${request.user.getUsername()}"></td>
             <td class="text-center">
-                <span th:class="badge" th:classappend="${request.status.name().equals('NEW')} ? 'bg-warning text-dark' : (${request.status.name().equals('APPROVED')} ?  'bg-success' : 'bg-danger')">
+                <span th:class="badge"
+                      th:classappend="${request.status.name().equals('NEW')} ? 'bg-warning text-dark' : (${request.status.name().equals('APPROVED')} ?  'bg-success' : 'bg-danger')">
                     <span th:text="${request.status.name()}"/>
                 </span>
             </td>
             <td class="text-center" th:text="${#temporals.format(request.dateCreate, 'dd-MM-yyyy HH:mm')}"></td>
-            <td th:if="${request.status.name().equals('NEW')}"><button type="button" class="btn btn-success">Approve</button></td>
-            <td  th:if="${request.status.name().equals('NEW')}"><button type="button" class="btn btn-danger">Reject</button></td>
+            <td th:if="${request.status.name().equals('NEW')}">
+                <form method="post" th:action="@{/request/approve}">
+                    <input hidden="hidden" name="requestId" th:value="${request.id}">
+                    <button type="submit" class="btn btn-success">Approve</button>
+                </form>
+
+            </td>
+            <td th:if="${request.status.name().equals('NEW')}">
+                <form method="post" th:action="@{/request/reject}">
+                    <input hidden="hidden" name="requestId" th:value="${request.id}">
+                    <button type="submit" class="btn btn-danger">Reject</button>
+                </form>
+            </td>
         </tr>
     </table>
 </div>
