@@ -32,4 +32,12 @@ public class Request {
 
     private LocalDateTime dateCreate = LocalDateTime.now();
 
+    public Request(Car car, User user) {
+        this.car = car;
+        this.user = user;
+    }
+
+    public Car getCarString() {
+        return new Car(car.getCarId(),car.getBrand(),car.getCarNumber(),car.getModel(),car.getYearOfProduction(),car.getVinNumber(),car.getOldRegistryNumber());
+    }
 }

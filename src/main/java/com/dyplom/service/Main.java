@@ -2,9 +2,7 @@ package com.dyplom.service;
 
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
-/**
- * @author Serhii Manko
- */
+
 public class Main {
 
   public static void main(String[] args) {

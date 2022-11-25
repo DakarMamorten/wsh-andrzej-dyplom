@@ -12,9 +12,7 @@ import org.springframework.stereotype.Service;
 import javax.persistence.EntityNotFoundException;
 import java.util.List;
 
-/**
- * @author Serhii Manko
- */
+
 @Service
 @RequiredArgsConstructor
 public class MyUserDetailsService implements UserDetailsService {

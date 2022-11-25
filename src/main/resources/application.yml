@@ -7,3 +7,13 @@ spring:
   jpa:
     hibernate:
       ddl-auto: validate
+car:
+  numbers:
+    A:
+      - 'FF10FF'
+      - 'WD-15'
+      - 'FG11FF'
+      - 'FG12FF'
+      - 'FG13FF'
+      - 'WD-16'
+      - 'WD-17'

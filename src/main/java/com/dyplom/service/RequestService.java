@@ -2,6 +2,10 @@ package com.dyplom.service;
 
 import com.dyplom.domain.Request;
 import com.dyplom.domain.Status;
+import com.dyplom.domain.User;
+import com.dyplom.domain.car.Car;
+import com.dyplom.domain.car.CarNumber;
+import com.dyplom.domain.car.Model;
 import com.dyplom.repository.RequestRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -36,5 +40,14 @@ public class RequestService {
     public void rejectRequest(Long requestId) {
         log.info("Start processing request with id: {} for reject", requestId);
         requestRepository.findById(requestId).ifPresent(request -> request.setStatus(Status.REJECTED));
+    }
+
+    public void add(CarNumber carNumber, String brand, Model model, int yearOfProduction,
+                    String vinNumber) {
+        Car car = new Car(carNumber,brand, model, yearOfProduction, vinNumber);
+
+        User user = new User();
+        Request request = new Request(car, user);
+        requestRepository.save(request);
     }
 }

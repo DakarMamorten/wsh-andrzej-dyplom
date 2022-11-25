@@ -1,6 +1,9 @@
 package com.dyplom.controller;
 
+import com.dyplom.domain.car.CarNumber;
+import com.dyplom.service.CarService;
 import com.dyplom.service.RequestService;
+import com.dyplom.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -14,6 +17,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 @RequiredArgsConstructor
 public class RequestController {
     private final RequestService requestService;
+    private final CarService carService;
+    private final UserService userService;
 
     @GetMapping("/list")
     public String list(Model model) {
@@ -35,5 +40,14 @@ public class RequestController {
         requestService.rejectRequest(requestId);
         return "redirect:/request/list";
 
+    }
+
+    @PostMapping("/add")
+    public String add(CarNumber carNumber,
+                      String brand, com.dyplom.domain.car.Model model,
+                      int yearOfProduction,
+                      String vinNumber) {
+        requestService.add(carNumber, brand, model, yearOfProduction, vinNumber);
+        return "redirect:/request/list";
     }
 }

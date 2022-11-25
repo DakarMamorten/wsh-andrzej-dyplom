@@ -11,20 +11,23 @@
 <div th:include="/navbar::content"></div>
 <div class="container">
     <h3>My Requests</h3>
+    <button type="button" class="btn btn-outline-primary" data-bs-toggle="modal"
+            data-bs-target="#addModal">
+        Add request
+    </button>
+
     <table class="table table-striped align-middle">
         <tr>
             <th class="text-center">Request id</th>
-            <th class="text-center">Car brand</th>
-            <th class="text-center">Car model</th>
-            <th class="text-center">Car number</th>
+            <th class="text-center">Car</th>
+            <th class="text-center">User</th>
             <th class="text-center">Status</th>
             <th class="text-center">Date</th>
         </tr>
         <tr th:each="request : ${user_requests}">
             <td class="text-center" th:text="${request.id}"></td>
-            <td class="text-center" th:text="${request.car.getBrand()}"></td>
-            <td class="text-center" th:text="${request.car.getModel().name()}"></td>
-            <td class="text-center" th:text="${request.car.getRegNo()}"></td>
+            <td class="text-center" th:text="${request.getCar().getBrand()}"></td>
+            <td class="text-center" th:text="${request.user.getUsername()}"></td>
             <td class="text-center">
                 <span th:class="badge"
                       th:classappend="${request.status.name().equals('NEW')} ? 'bg-warning text-dark' : (${request.status.name().equals('APPROVED')} ?  'bg-success' : 'bg-danger')">
@@ -42,8 +45,6 @@
         <tr>
             <th class="text-center">Request id</th>
             <th class="text-center">Car brand</th>
-            <th class="text-center">Car model</th>
-            <th class="text-center">Car number</th>
             <th class="text-center">User name</th>
             <th class="text-center">Status</th>
             <th class="text-center">Date</th>
@@ -51,9 +52,7 @@
         </tr>
         <tr th:each="request : ${requests}">
             <td class="text-center" th:text="${request.id}"></td>
-            <td class="text-center" th:text="${request.car.getBrand()}"></td>
-            <td class="text-center" th:text="${request.car.getModel().name()}"></td>
-            <td class="text-center" th:text="${request.car.getRegNo()}"></td>
+            <td class="text-center" th:text="${request.getCarString()}"></td>
             <td class="text-center" th:text="${request.user.getUsername()}"></td>
             <td class="text-center">
                 <span th:class="badge"
@@ -77,6 +76,44 @@
             </td>
         </tr>
     </table>
+</div>
+<!--add-->
+<div class="modal fade" th:each="req : ${requests}" id="addModal" tabindex="-1" aria-labelledby="addModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-" id="addModalLabel">Add car</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form th:action="@{/request/add}" method="post">
+                <div class="modal-body">
+                    <div class="modal-body">
+                        <div class="mb-3">
+                            <label for="carBrand" class="form-label" th:text="'Input car : '"></label>
+                            <input type="text" class="form-control" id="carBrand" name="carBrand"
+                                   th:value="${req.car.brand}">
+
+                        </div>
+                        <div class="mb-3">
+                            <label for="userId" class="form-label" th:text="'Input user : '"></label>
+                            <input type="text" class="form-control" id="userId" name="userId"
+                                   th:value="${req.user.username}">
+                        </div>
+                        <div class="mb-3">
+                            <label for="status" class="form-label" th:text="'Input vin status : '"></label>
+                            <input type="text" class="form-control" id="status" name="status"
+                                   th:value="${req.status.name()}">
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary">Save changes</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
 </div>
 
 </body>
