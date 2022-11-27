@@ -1,9 +1,9 @@
 CREATE TABLE car
 (
     car_id              BIGSERIAL,
-    brand               VARCHAR,
-    car_number_id       BIGINT,
     model               VARCHAR,
+    car_number_id       BIGINT,
+    brand               VARCHAR,
     year_of_production  INTEGER,
     vin_number          VARCHAR,
     old_registry_number VARCHAR,
@@ -12,6 +12,6 @@ CREATE TABLE car
         REFERENCES car_number
 );
 
-INSERT INTO car(brand, car_number_id, model, year_of_production, vin_number, old_registry_number)
+INSERT INTO car(model, car_number_id, brand, year_of_production, vin_number, old_registry_number)
 VALUES ('Avensis', 1, 'TOYOTA', 2006, '123123WEf2123f', 'AE2343AC');
 VALUES ('Golf', 1, 'VOLKSWAGEN', 2008, '87567554WEf2123f', 'AA2383AC');

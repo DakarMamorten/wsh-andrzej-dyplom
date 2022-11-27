@@ -37,7 +37,5 @@ public class Request {
         this.user = user;
     }
 
-    public Car getCarString() {
-        return new Car(car.getCarId(),car.getBrand(),car.getCarNumber(),car.getModel(),car.getYearOfProduction(),car.getVinNumber(),car.getOldRegistryNumber());
-    }
+
 }

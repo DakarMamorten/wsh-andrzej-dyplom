@@ -1,6 +1,6 @@
 package com.dyplom.domain.car;
 
-public enum Model {
+public enum Brand {
     TOYOTA("Toyota"),
     MERCEDES("Mercedes"),
     BMW("Bmw"),
@@ -9,7 +9,7 @@ public enum Model {
     RENAULT("Renault"),
     LAMBORGHINI("Lamborghini");
 
-    Model(String toyota) {
+    Brand(String value) {
 
     }
 }

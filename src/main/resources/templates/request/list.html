@@ -19,7 +19,8 @@
     <table class="table table-striped align-middle">
         <tr>
             <th class="text-center">Request id</th>
-            <th class="text-center">Car</th>
+            <th class="text-center">Brand</th>
+            <th class="text-center">Model</th>
             <th class="text-center">User</th>
             <th class="text-center">Status</th>
             <th class="text-center">Date</th>
@@ -27,6 +28,7 @@
         <tr th:each="request : ${user_requests}">
             <td class="text-center" th:text="${request.id}"></td>
             <td class="text-center" th:text="${request.getCar().getBrand()}"></td>
+            <td class="text-center" th:text="${request.getCar().getModel()}"></td>
             <td class="text-center" th:text="${request.user.getUsername()}"></td>
             <td class="text-center">
                 <span th:class="badge"
@@ -45,6 +47,7 @@
         <tr>
             <th class="text-center">Request id</th>
             <th class="text-center">Car brand</th>
+            <th class="text-center">Car model</th>
             <th class="text-center">User name</th>
             <th class="text-center">Status</th>
             <th class="text-center">Date</th>
@@ -52,7 +55,8 @@
         </tr>
         <tr th:each="request : ${requests}">
             <td class="text-center" th:text="${request.id}"></td>
-            <td class="text-center" th:text="${request.getCarString()}"></td>
+            <td class="text-center" th:text="${request.car.getBrand()}"></td>
+            <td class="text-center" th:text="${request.car.getBrand()}"></td>
             <td class="text-center" th:text="${request.user.getUsername()}"></td>
             <td class="text-center">
                 <span th:class="badge"
@@ -83,27 +87,39 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-" id="addModalLabel">Add car</h5>
+                <h5 class="modal-" id="addModalLabel">New request</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <form th:action="@{/request/add}" method="post">
                 <div class="modal-body">
                     <div class="modal-body">
                         <div class="mb-3">
-                            <label for="carBrand" class="form-label" th:text="'Input car : '"></label>
-                            <input type="text" class="form-control" id="carBrand" name="carBrand"
-                                   th:value="${req.car.brand}">
+                            <label for="carBrand" class="form-label" th:text="'Input brand : '"></label>
+                            <input type="text" class="form-control" id="carBrand" name="carBrand">
+                        </div>
+                        <div class="mb-3">
+                            <label for="carNumber" class="form-label" th:text="'Input car number : '"></label>
+                            <input type="text" class="form-control" id="carNumber" name="carNumber">
 
                         </div>
                         <div class="mb-3">
-                            <label for="userId" class="form-label" th:text="'Input user : '"></label>
-                            <input type="text" class="form-control" id="userId" name="userId"
-                                   th:value="${req.user.username}">
+                            <label for="carNumber" class="form-label" th:text="'Input region : '"></label>
+                            <input type="text" class="form-control" id="countryRegion" name="countryRegion">
+
                         </div>
                         <div class="mb-3">
-                            <label for="status" class="form-label" th:text="'Input vin status : '"></label>
-                            <input type="text" class="form-control" id="status" name="status"
-                                   th:value="${req.status.name()}">
+                            <label for="carModel" class="form-label" th:text="'Input model : '"></label>
+                            <input type="text" class="form-control" id="carModel" name="carModel">
+                        </div>
+                        <div class="mb-3">
+                            <label for="yearOfProduction" class="form-label"
+                                   th:text="'Input year of production : '"></label>
+                            <input type="text" class="form-control" id="yearOfProduction" name="yearOfProduction">
+                        </div>
+                        <div class="mb-3">
+                            <label for="vinNumber" class="form-label"
+                                   th:text="'Input vin number : '"></label>
+                            <input type="text" class="form-control" id="vinNumber" name="vinNumber">
                         </div>
                     </div>
                     <div class="modal-footer">

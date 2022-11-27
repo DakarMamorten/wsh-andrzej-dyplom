@@ -16,20 +16,20 @@ public class Car {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long carId;
-    private String brand;
+    private String model;
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "carNumberId")
     private CarNumber carNumber;
     @Enumerated(EnumType.STRING)
-    private Model model;
+    private Brand brand;
     private int yearOfProduction;
     private String vinNumber;
     private String oldRegistryNumber;
 
-    public Car(CarNumber carNumber, String brand, Model model, int yearOfProduction, String vinNumber) {
+    public Car(String model, CarNumber carNumber, Brand brand, int yearOfProduction, String vinNumber) {
+        this.model = model;
         this.carNumber = carNumber;
         this.brand = brand;
-        this.model = model;
         this.yearOfProduction = yearOfProduction;
         this.vinNumber = vinNumber;
     }
