@@ -18,6 +18,10 @@ public enum CountryRegistration {
 
     private final String countryName;
 
+    public String getCountryName() {
+        return countryName;
+    }
+
     CountryRegistration(String countryName) {
         this.countryName = countryName;
     }

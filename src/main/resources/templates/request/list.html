@@ -94,16 +94,24 @@
                 <div class="modal-body">
                     <div class="modal-body">
                         <div class="mb-3">
-                            <label for="carBrand" class="form-label" th:text="'Input brand : '"></label>
-                            <input type="text" class="form-control" id="carBrand" name="carBrand">
-                        </div>
-                        <div class="mb-3">
-                            <label for="carNumber" class="form-label" th:text="'Input car number : '"></label>
-                            <input type="text" class="form-control" id="carNumber" name="carNumber">
+                            <label for="carBrand" class="form-label" th:text="'Input car brand : '"></label>
 
+                            <select name="carBrand" id="carBrand">
+                                <option th:each="brand : ${T(com.dyplom.domain.car.Brand).values()}"
+                                        th:value="${brand}" th:text="${brand}"></option>
+                            </select>
                         </div>
+
+                        <div class="carNumbers">
+                            <label for="carBrand" class="form-label" th:text="'Input car brand : '"></label>
+                            <select id="carNumbers" name="carNumbers" >
+                                <option th:each="carNumber: ${carNumbers}"
+                                        th:value="${carNumber}" th:text="${carNumber.getCountryName()}">
+                            </select>
+                        </div>
+
                         <div class="mb-3">
-                            <label for="carNumber" class="form-label" th:text="'Input region : '"></label>
+                            <label for="countryRegion" class="form-label" th:text="'Input region : '"></label>
                             <input type="text" class="form-control" id="countryRegion" name="countryRegion">
 
                         </div>

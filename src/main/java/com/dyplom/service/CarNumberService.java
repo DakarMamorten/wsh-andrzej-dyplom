@@ -5,6 +5,8 @@ import com.dyplom.repository.CarNumberRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor
 public class CarNumberService {
@@ -12,5 +14,9 @@ public class CarNumberService {
 
     public void save(CarNumber entity) {
         carNumberRepository.save(entity);
+    }
+
+    public List<CarNumber> findAll() {
+        return carNumberRepository.findAll();
     }
 }

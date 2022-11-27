@@ -1,6 +1,8 @@
 package com.dyplom.controller;
 
+import com.dyplom.domain.car.CountryRegistration;
 import com.dyplom.domain.dto.RequestDTO;
+import com.dyplom.service.CarNumberService;
 import com.dyplom.service.RequestService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
@@ -15,12 +17,14 @@ import org.springframework.web.bind.annotation.RequestParam;
 @RequiredArgsConstructor
 public class RequestController {
     private final RequestService requestService;
+    private final CarNumberService carNumberService;
 
     @GetMapping("/list")
     public String list(Model model) {
         //TODO divide logic to separate controller
         model.addAttribute("requests", requestService.findAll());
         model.addAttribute("user_requests", requestService.findAllByUser());
+        model.addAttribute("carNumbers", CountryRegistration.values());
         return "request/list";
     }
 
