@@ -9,7 +9,7 @@
 </head>
 <body>
 <div th:include="/navbar::content"></div>
-<div class="container" >
+<div class="container">
     <button type="button" class="btn btn-outline-primary" data-bs-toggle="modal"
             data-bs-target="#addModal">
         Add user
@@ -36,13 +36,14 @@
                 <h5 class="modal-" id="addModalLabel">Add user</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <form th:action="@{/users/add}" method="post">
+            <form th:action="@{/admin/users/add}" method="post">
                 <div class="modal-body">
                     <div class="modal-body">
                         <div class="mb-3">
-                            <label  for="select-role" class="form-label" th:text="'role: '" ></label>
+                            <label for="select-role" class="form-label" th:text="'role: '"></label>
                             <select class="form-control" id="select-role" name="role">
-                                <option th:each="role : ${T(com.dyplom.domain.Role).values()}" th:value="${role}" th:text="${role}"></option>
+                                <option th:each="role : ${T(com.dyplom.domain.Role).values()}" th:value="${role}"
+                                        th:text="${role}"></option>
                             </select>
                         </div>
                         <div class="mb-3">

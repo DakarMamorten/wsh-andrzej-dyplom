@@ -28,6 +28,13 @@ public class RequestController {
         return "request/list";
     }
 
+    @GetMapping
+    public String findById(@RequestParam Long id, Model model) {
+        model.addAttribute("request", requestService.findById(id));
+        return "request/request_info";
+    }
+
+
     @PostMapping("/approve")
     public String approve(@RequestParam Long requestId) {
         requestService.approveRequest(requestId);

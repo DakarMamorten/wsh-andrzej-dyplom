@@ -19,58 +19,62 @@
     <table class="table table-striped align-middle">
         <tr>
             <th class="text-center">Request id</th>
-            <th class="text-center">Brand</th>
             <th class="text-center">Model</th>
+            <th class="text-center">Brand</th>
             <th class="text-center">User</th>
             <th class="text-center">Status</th>
             <th class="text-center">Date</th>
         </tr>
         <tr th:each="request : ${user_requests}">
-            <td class="text-center" th:text="${request.id}"></td>
-            <td class="text-center" th:text="${request.getCar().getBrand()}"></td>
-            <td class="text-center" th:text="${request.getCar().getModel()}"></td>
-            <td class="text-center" th:text="${request.user.getUsername()}"></td>
+            <td class="text-center">
+                <a th:href="@{/request(id=${request.id})}" th:text="${request.identifier}"></a>
+            </td>
+            <td class="text-center" th:text="${request.carModel}"></td>
+            <td class="text-center" th:text="${request.carBrand}"></td>
+            <td class="text-center" th:text="${request.username}"></td>
+
             <td class="text-center">
                 <span th:class="badge"
                       th:classappend="${request.status.name().equals('NEW')} ? 'bg-warning text-dark' : (${request.status.name().equals('APPROVED')} ?  'bg-success' : 'bg-danger')">
                     <span th:text="${request.status.name()}"/>
                 </span>
             </td>
-            <td class="text-center" th:text="${#temporals.format(request.dateCreate, 'dd-MM-yyyy HH:mm')}"></td>
+            <td class="text-center" th:text="${#temporals.format(request.date, 'dd-MM-yyyy HH:mm')}"></td>
         </tr>
     </table>
 </div>
-
+<!--admin panel-->
 <div class="container" sec:authorize="hasRole('ROLE_ADMINISTRATOR')">
     <h2>Request List</h2>
     <table class="table table-striped align-middle">
         <tr>
             <th class="text-center">Request id</th>
-            <th class="text-center">Car brand</th>
             <th class="text-center">Car model</th>
+            <th class="text-center">Car brand</th>
             <th class="text-center">User name</th>
             <th class="text-center">Status</th>
             <th class="text-center">Date</th>
             <th class="text-center" colspan="2">Action</th>
         </tr>
         <tr th:each="request : ${requests}">
-            <td class="text-center" th:text="${request.id}"></td>
-            <td class="text-center" th:text="${request.car.getBrand()}"></td>
-            <td class="text-center" th:text="${request.car.getBrand()}"></td>
-            <td class="text-center" th:text="${request.user.getUsername()}"></td>
+            <td class="text-center">
+                <a th:href="@{/request/(id=${request.id})}" th:text="${request.identifier}"></a>
+            </td>
+            <td class="text-center" th:text="${request.carModel}"></td>
+            <td class="text-center" th:text="${request.carBrand}"></td>
+            <td class="text-center" th:text="${request.username}"></td>
             <td class="text-center">
                 <span th:class="badge"
                       th:classappend="${request.status.name().equals('NEW')} ? 'bg-warning text-dark' : (${request.status.name().equals('APPROVED')} ?  'bg-success' : 'bg-danger')">
                     <span th:text="${request.status.name()}"/>
                 </span>
             </td>
-            <td class="text-center" th:text="${#temporals.format(request.dateCreate, 'dd-MM-yyyy HH:mm')}"></td>
+            <td class="text-center" th:text="${#temporals.format(request.date, 'dd-MM-yyyy HH:mm')}"></td>
             <td th:if="${request.status.name().equals('NEW')}">
                 <form method="post" th:action="@{/request/approve}">
                     <input hidden="hidden" name="requestId" th:value="${request.id}">
                     <button type="submit" class="btn btn-success">Approve</button>
                 </form>
-
             </td>
             <td th:if="${request.status.name().equals('NEW')}">
                 <form method="post" th:action="@{/request/reject}">
@@ -95,30 +99,31 @@
                     <div class="modal-body">
                         <div class="mb-3">
                             <label for="carBrand" class="form-label" th:text="'Input car brand : '"></label>
-
                             <select name="carBrand" id="carBrand">
                                 <option th:each="brand : ${T(com.dyplom.domain.car.Brand).values()}"
                                         th:value="${brand}" th:text="${brand}"></option>
                             </select>
                         </div>
-
+                        <div class="mb-3">
+                            <label for="carModel" class="form-label" th:text="'Input model : '"></label>
+                            <select name="carModel" id="carModel">
+                                <option th:each="model : ${T(com.dyplom.domain.car.Model).values()}"
+                                        th:value="${model}" th:text="${model}"></option>
+                            </select>
+                        </div>
                         <div class="carNumbers">
-                            <label for="carBrand" class="form-label" th:text="'Input car brand : '"></label>
-                            <select id="carNumbers" name="carNumbers" >
+                            <label for="countryRegion" class="form-label" th:text="'Input region : '"></label>
+                            <select id="countryRegion" name="countryRegion">
                                 <option th:each="carNumber: ${carNumbers}"
                                         th:value="${carNumber}" th:text="${carNumber.getCountryName()}">
                             </select>
                         </div>
-
-                        <div class="mb-3">
-                            <label for="countryRegion" class="form-label" th:text="'Input region : '"></label>
-                            <input type="text" class="form-control" id="countryRegion" name="countryRegion">
-
+                        <div class="registrationNumber">
+                            <label for="registrationNumber" class="form-label"
+                                   th:text="'Input registration number : '"></label>
+                            <input type="text" class="form-control" id="registrationNumber" name="registrationNumber">
                         </div>
-                        <div class="mb-3">
-                            <label for="carModel" class="form-label" th:text="'Input model : '"></label>
-                            <input type="text" class="form-control" id="carModel" name="carModel">
-                        </div>
+
                         <div class="mb-3">
                             <label for="yearOfProduction" class="form-label"
                                    th:text="'Input year of production : '"></label>
@@ -139,6 +144,5 @@
         </div>
     </div>
 </div>
-
 </body>
 </html>

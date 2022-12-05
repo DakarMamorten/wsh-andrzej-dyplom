@@ -15,13 +15,13 @@ public class CarNumber {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    private String regNo;
+    private String registrationNumber;
 
     @Enumerated(EnumType.STRING)
     private CountryRegistration countryRegion;
 
-    public CarNumber(String regNo, CountryRegistration countryRegion) {
-        this.regNo = regNo;
+    public CarNumber(String registrationNumber, CountryRegistration countryRegion) {
+        this.registrationNumber = registrationNumber;
         this.countryRegion = countryRegion;
     }
 }
