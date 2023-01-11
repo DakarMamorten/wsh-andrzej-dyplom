@@ -79,7 +79,7 @@ public class RequestService {
         requestRepository.findById(requestId).ifPresent(request -> request.setStatus(Status.REJECTED));
     }
 
-    public void add(RequestDTO dto) {
+    public RequestDTO add(RequestDTO dto) {
         var carNumber = new CarNumber(dto.getRegistrationNumber(), CountryRegistration.valueOf(dto.getCountryRegion()));
         carNumberService.save(carNumber);
 
@@ -91,6 +91,8 @@ public class RequestService {
         var request = new Request(car, user);
         request.setStatus(Status.NEW);
 
-        requestRepository.save(request);
+        request = requestRepository.save(request);
+
+        return mapEntityToDto().apply(request);
     }
 }
