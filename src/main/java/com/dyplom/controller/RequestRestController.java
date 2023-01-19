@@ -24,23 +24,19 @@ public class RequestRestController {
     }
 
     @GetMapping
-    public RequestDTO findById(@RequestParam Long id) {
-       return requestService.findById(id);
+    public RequestDTO findById(@RequestParam Long requestId) {
+       return requestService.findById(requestId);
     }
 
 
     @PostMapping("/approve")
-    public String approve(@RequestParam Long requestId) {
+    public void approve(@RequestParam Long requestId) {
         requestService.approveRequest(requestId);
-        return "redirect:/request/list";
-
     }
 
     @PostMapping("/reject")
-    public String reject(@RequestParam Long requestId) {
+    public void reject(@RequestParam Long requestId) {
         requestService.rejectRequest(requestId);
-        return "redirect:/request/list";
-
     }
 
     @PostMapping("/add")
